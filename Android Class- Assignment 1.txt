@@ -1,0 +1,41 @@
+AppWorks School-Android Class : Week 1 Assigment
+Question 1 
+a. val id = 9527
+正確︰Kotlin有type inference的特性，因此在宣告變數時即便不說明資料型態，它都會跟據要傳入的值來自動判斷。而在這情況中id的型態會因為9527而被判斷為是Int。
+
+b. var number : Int = 5.6
+錯誤︰由於宣告中規定了number的資料型態必須為Int，但5.6若沒有特別做轉型則會預設為是Double的資料型態。傳入的資料型態與規定的不符合，因此會出錯。
+
+c. var title = "Hello Kotlin!"
+正確︰理由和第一題一樣，即便宣告的為變數而不是常數，在不明確規定資料型態的情況下，Kotlin會跟據要傳入的值來做type inference。因此，title會被自動推斷為String。
+
+d. val content : String = null
+錯誤︰Kotlin有nullsafe機制，因此在規定變數的型態的值為String卻傳入null值時，它就會出錯。若要除錯，讓content可以接受null值的話，則要在String後加上「?」（val content : String? = null）才不會出錯。
+
+e. val number : Double? = 556.6
+正確︰556.6本身在編譯器中就是屬於Double的資料型態，而Double後的「?」只代表number可以接受型態為Double和Null的值，不會影響值556.6的傳入。
+
+f. var list: List<String>? = ​ listOf(null, null)
+錯誤︰此段程式的前段（等號前）的意思如下︰宣告一個名為list且資料型態可以為集合List或null，集合資料必定為String值的變數。也就是說，集合裏值的型態必定要是Stirng，可以null的就只有集合的型態，故不能夠在listOf的值裏宣告兩個null值。
+
+g.  ​var list: List<String?>? = ​listOf("Wayne", "Chen")
+正確︰g跟f前段的意思幾乎一樣，差別在於，在<String>後多了一個「?」，這代表現在集合list裏面也可以接受String或null的值。不過在這邊傳入的剛好是Stirng，所以沒有任何問題。
+
+h.list.size
+錯誤︰不論這題呼叫的是f或g段程式碼的list函式都會出錯。原因是在於list在宣告時說明了它有可能會是空值，但這邊則沒有把list可能為空值的情況告訴給編譯器。因此編譯器會不知道若是空值時是否該照樣執行函式size，就會顯示錯誤。
+
+i.list?.size
+正確︰這邊在list後加上了「?」，說明了list在空值的情況下也要執行函式size，這使函式size也可以接受資料型態為null或List的集合，所以可以正常執行。
+
+Question 2
+答案為c。
+解題如下︰首先題目宣告了一個名為message的常數，並傳入"Hello and Welcome to AppWorks School :)"、資料型態為String的值。然後使用when來做條件控制，而message.length就是判斷的資料，當長度為0／1至39／40至56或其他時則執行各自所設定的動作、輸出不同的結果。
+這邊會是得出"Your grace."的原因，是String實際上是char的集合，所代表的是一連串的char元素，因此不論是空格、文字還是特殊符號，在String內都會算作是一個元素，所以message的長度是39，編譯器就會執行長度為1至39的動作。
+
+Question 3
+答案為d。
+解題如下︰首先題目宣告了二個常數，一個名為arry，一個名為units。前者先不討論，unit為一個長度為6的String陣列，陣列內的值按0-4做編號順序，分別為byte、KB、MB、GB、TB和PB。然後編寫for迴圈，設定若變數i和value為在常數array的withIndex（withIndex是可以同時取出陣列位置和儲存內容的函式，所以現在變數i為array陣列的位置，value為對應位置的值）的範圍內時，則不斷分行印出"1 「陣列units中[i]位置的值」 = 「要轉型成Long資料型態的value」 bytes\n(換行符號)"。
+由於輸出結果有6行，且也剛好印出所有在陣列units內的值，這除了可以推出array也應該為一個長度為6的陣列外，也可以得知選項a和b是錯誤的。選項a像是在設定陣列長度，但在Kotlin中設定陣列長度是不用加new的，加上它也沒有初始化陣列的內容，因此這不可能是正確答案。選項b只用lambda預設了array的值，並沒有宣告這變數為陣列，所以也是錯誤的。
+選項c和d兩者基本上是一樣的，它們都為array設定了一個大小為6的陣列，並用lambda來初始化陣列array裏的值。在兩者的lamnda運算式裏，所執行動作的是把底數為1000.0的次方(pow)(為甚麼是1000.0而不是1000，是因為函式pow的數值型態必須為Float或Double)算出來，但他們所取的指數不一樣，c的指數為10、d的則為一個變數it。
+再次看看輸出結果，可以肯定答案不是c，若結果為c，則陣列array內的所有值都會為1000.0的10次方，這樣的話在${value.toLong()}裏是不可能輸出1、1000等不同數值的答案的。
+因此答案為d，只有次方的指數為一個變數，它才可能輸出不同的值的大小，而這邊it所代表的是一個陣列大小的變數，即它會是0、1、2、3、4、5，所以陣列array內的數值分別為1000.0^0、1000.0^1、1000.0^2、1000.0^3、1000.0^4、1000.0^5，然後得到這樣的輸出。

@@ -1,0 +1,12 @@
+class Human(var name : String){
+
+    fun attack() {
+        println("$name uses Fist Attack!")
+    }
+}
+
+fun main() {
+    val character1 = Human("Tina")
+        character1.attack()
+
+}
